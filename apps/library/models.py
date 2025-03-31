@@ -15,10 +15,10 @@ class Category(BaseModel):
         return self.title
     
 class Book(BaseModel):
-    name = models.CharField(max_length=256, verbose_name='Book nomi')
+    name = models.CharField(max_length=256, verbose_name='Kitob nomi')
     category = models.ForeignKey(Category, on_delete = models.RESTRICT, null=True)
-    file = models.FileField(upload_to='file/',verbose_name ='Book format')
-    description = models.TextField(verbose_name='Description', null=True, blank=True)
+    file = models.FileField(upload_to='file/',verbose_name ='File')
+    description = models.TextField(verbose_name='Kitob haqida', null=True, blank=True)
 
 
     class Meta:
@@ -26,7 +26,7 @@ class Book(BaseModel):
         verbose_name_plural = 'Books'
 
     def __str__(self):
-        return self.title
+        return self.name
     
 class Rating_Book(BaseModel):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='ratings')
@@ -47,7 +47,16 @@ class Rating_Book(BaseModel):
         return (f"{self.user.username} nomli foydalanuvchi, {self.book.name}"
                 f"kitobiga 5 dan {self.rating} baho qo'ydi")
 
+class Wishlist_Book(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    books = models.ForeignKey(Book, on_delete=models.CASCADE)
     
+    class Meta:
+        verbose_name = 'Wishlist'
+        verbose_name_plural = 'Wishlists'
+
+    def __str__(self):
+        return f"{self.user.username} - {self.books.name}"
 
 
 class Image_Book(BaseModel):
@@ -64,8 +73,8 @@ class Image_Book(BaseModel):
 
     
 class Comment(BaseModel):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='book', related_name='comment')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user', related_name='comment')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='book', related_name='book_comment')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user', related_name='user_comment')
     text = models.TextField(verbose_name='comment')
 
     class Meta:
@@ -74,5 +83,6 @@ class Comment(BaseModel):
 
     def __str__(self):
         return f'{self.user} - {self.book}'
+    
 
     
