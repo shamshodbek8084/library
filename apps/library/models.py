@@ -28,6 +28,18 @@ class Book(BaseModel):
     def __str__(self):
         return self.name
     
+class Image_Book(BaseModel):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='file/')
+
+    class Meta:
+        verbose_name = 'Image_Book'
+        verbose_name_plural = 'Image_Books'
+
+    def __str__(self):
+        return f"{self.image.name} uchun rasm"
+    
+    
 class Rating_Book(BaseModel):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='ratings')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -57,21 +69,29 @@ class Wishlist_Book(BaseModel):
 
     def __str__(self):
         return f"{self.user.username} - {self.books.name}"
+    
 
-
-class Image_Book(BaseModel):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='file/')
+class Orders_Book(BaseModel):
+    books = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0, verbose_name='Kitoblar Soni')
+    total_price = models.IntegerField(verbose_name='Jami Narxi')
+    STATUS = [
+        ('start', 'Buyurtma rasmiylashtirildi'),
+        ('awarage', 'Buyurtma yigilyapti'),
+        ('medium', 'Buyurtma yulda'),
+        ('end', 'Buyurtma sizda'),
+    ]
+    status = models.CharField(max_length=256, choices=STATUS, verbose_name='Buyurtma Holati')
 
     class Meta:
-        verbose_name = 'Image_Book'
-        verbose_name_plural = 'Image_Books'
-
-    def __str__(self):
-        return f"{self.image.name} uchun rasm"
-
-
+        verbose_name = 'Orders_Book'
+        verbose_name_plural = 'Orders_Books'
     
+    def __str__(self):
+        return f"{self.user.username} - {self.quantity} - {self.total_price} - {self.books.name}"
+
+
 class Comment(BaseModel):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='book', related_name='book_comment')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='user', related_name='user_comment')
@@ -85,4 +105,3 @@ class Comment(BaseModel):
         return f'{self.user} - {self.book}'
     
 
-    
