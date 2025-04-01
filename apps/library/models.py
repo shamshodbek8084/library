@@ -30,7 +30,7 @@ class Book(BaseModel):
     
 class Image_Book(BaseModel):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='file/')
+    image = models.ImageField(upload_to='book_images/')
 
     class Meta:
         verbose_name = 'Image_Book'

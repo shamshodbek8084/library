@@ -11,7 +11,19 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # Access token uchun amal qilish muddati
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Refresh token uchun amal qilish muddati
+    'ROTATE_REFRESH_TOKENS': False,                   # Refresh tokenni faqat bitta qayta ishlash
+    'BLACKLIST_AFTER_ROTATION': True,                  # Token yangilangandan so'ng eskilarni blacklistga qo'shish
+    'UPDATE_LAST_LOGIN': True,                         # Login va parolni yangilash
+    'ALGORITHM': 'HS256',                              # JWT algoritmi (default HS256)
+    'SIGNING_KEY': 'your-secret-key',                  # Maxfiy kalit
+    'LEEWAY': 0,                                       # Toleransiya (JWT vaqtini tekshirishda)
+}
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,12 +50,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'rest_framework',
     'apps.accounts',
     'apps.base',
     'apps.library',
     
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
