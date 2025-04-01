@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from rest_framework.generics import CreateAPIView, GenericAPIView, DestroyAPIView
+from rest_framework.generics import CreateAPIView, GenericAPIView, DestroyAPIView, ListAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from .serializer import Register_Serializer, Login_Serializer
+from .serializer import Register_Serializer, Login_Serializer, Profile_Serializer
 from django.contrib.auth.models import User
 from rest_framework.response import Response
+from .models import Profile
 
 # Create your views here.
 
@@ -11,6 +12,20 @@ class RegisterView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = Register_Serializer
     permission_classes = [AllowAny, ]
+
+class ListView(ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = Register_Serializer
+    permission_classes = [AllowAny, ]
+
+class ProfileUpdateView(UpdateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = Profile_Serializer
+    permission_classes = [IsAuthenticated] 
+
+    def get_object(self):
+        return self.request.user.profile
+
 
 class LoginView(GenericAPIView):
     serializer_class = Login_Serializer
