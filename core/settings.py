@@ -15,14 +15,14 @@ from datetime import timedelta
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # Access token uchun amal qilish muddati
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Refresh token uchun amal qilish muddati
-    'ROTATE_REFRESH_TOKENS': False,                   # Refresh tokenni faqat bitta qayta ishlash
-    'BLACKLIST_AFTER_ROTATION': True,                  # Token yangilangandan so'ng eskilarni blacklistga qo'shish
-    'UPDATE_LAST_LOGIN': True,                         # Login va parolni yangilash
-    'ALGORITHM': 'HS256',                              # JWT algoritmi (default HS256)
-    'SIGNING_KEY': 'your-secret-key',                  # Maxfiy kalit
-    'LEEWAY': 0,                                       # Toleransiya (JWT vaqtini tekshirishda)
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     
+    'ROTATE_REFRESH_TOKENS': False,                   
+    'BLACKLIST_AFTER_ROTATION': True,                  
+    'UPDATE_LAST_LOGIN': True,                       
+    'ALGORITHM': 'HS256',                             
+    'SIGNING_KEY': 'your-secret-key',                 
+    'LEEWAY': 0,                                       
 }
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

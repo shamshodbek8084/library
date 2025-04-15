@@ -5,14 +5,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(BaseModel):
-    title = models.CharField(max_length=256, verbose_name="title")
+    name = models.CharField(max_length=256, verbose_name="title")
 
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
 
     def __str__(self):
-        return self.title
+        return self.name
     
 class Book(BaseModel):
     name = models.CharField(max_length=256, verbose_name='Kitob nomi')
