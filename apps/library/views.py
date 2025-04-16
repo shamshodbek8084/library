@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from .serializer import Book_Serializer, Rating_Serializer
+from .serializer import Book_Serializer, Rating_Serializer, ImageBook_Serializer
 from .permissions import IsAdmin, IsUser
-from .models import Category, Book, Rating_Book
+from .models import Category, Book, Rating_Book, Image_Book
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView, ListAPIView
+from rest_framework.filters import SearchFilter
 
 # Create your views here.
 # --------------------------------------------------------CRUD_BOOK--------------------------------------------
@@ -55,3 +56,31 @@ class All_Rating(ListAPIView):
     queryset = Rating_Book.objects.all()
     serializer_class = Rating_Serializer
     permission_classes = [IsAdmin, ]
+
+class Decrease_Rating(ListAPIView):
+    queryset = Rating_Book.objects.all().order_by('-rating')
+    serializer_class = Rating_Serializer
+    permission_classes = [IsAuthenticated]
+
+# --------------------------------------------------------Image_Book--------------------------------------------
+
+# class Image_Book(CreateAPIView):
+#     queryset = Image_Book.objects.all()
+#     serializer_class = ImageBook_Serializer
+#     permission_classes = [IsAdmin]
+
+# class List_Image_Book(ListAPIView):
+#     queryset = Image_Book.objects.all()
+#     serializer_class = ImageBook_Serializer
+#     permission_classes = [IsAdmin]
+
+# --------------------------------------------------------Search_Book--------------------------------------------
+
+class Search_Book_View(ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = Book_Serializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [SearchFilter]
+    search_fields = ['author', 'name']
+
+# --------------------------------------------------------Wishlist_Book--------------------------------------------

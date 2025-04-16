@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Category, Book, Rating_Book
+from .models import Category, Book, Rating_Book, Image_Book, Wishlist_Book
 from .permissions import IsAdmin, IsUser
 
 class Book_Serializer(ModelSerializer):
@@ -13,3 +13,12 @@ class Rating_Serializer(ModelSerializer):
         model = Rating_Book
         fields = '__all__'
 
+class ImageBook_Serializer(ModelSerializer):
+    class Meta:
+        model = Image_Book
+        fields = '__all__'
+
+class Wishlist_Book(ModelSerializer):
+    class Meta:
+        model = Wishlist_Book
+        fields = '__all__'

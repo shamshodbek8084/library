@@ -15,6 +15,7 @@ class Category(BaseModel):
         return self.name
     
 class Book(BaseModel):
+    author = models.CharField(max_length=256)
     name = models.CharField(max_length=256, verbose_name='Kitob nomi')
     category = models.ForeignKey(Category, on_delete = models.RESTRICT, null=True)
     file = models.FileField(upload_to='file/',verbose_name ='File')
@@ -37,7 +38,7 @@ class Image_Book(BaseModel):
         verbose_name_plural = 'Image_Books'
 
     def __str__(self):
-        return f"{self.image.name} uchun rasm"
+        return f"{self.book.name} uchun rasm"
     
     
 class Rating_Book(BaseModel):

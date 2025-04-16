@@ -5,7 +5,9 @@ from .views import (CreateBook_View,
                     DeleteBook_View,
                     Create_Rating,
                     Change_Rating,
-                    All_Rating,)
+                    All_Rating,
+                    Decrease_Rating,
+                    Search_Book_View,)
 
 
 urlpatterns = [
@@ -16,5 +18,9 @@ urlpatterns = [
     path('create_rating/', Create_Rating.as_view(), name='create_rating'),
     path('update_rating/<int:pk>/', Change_Rating.as_view(), name='update_rating'),
     path('list_rating/', All_Rating.as_view(), name='list_rating'),
+    path('decrease_list_rating/', Decrease_Rating.as_view(), name='decrease_list_rating'),
+    # path('create_image_book/', Image_Book.as_view(), name='create_image_book'),
+    # path('list_image_book/', List_Image_Book.as_view(), name='list_image_book'),
+    path('search_book/', Search_Book_View.as_view(), name='search_book'),
 
 ]
