@@ -136,9 +136,44 @@ class ListWishlist_View(ListAPIView):
         }
         return Response(data=data)
 
+class DeleteWishlist_View(DestroyAPIView):
+    queryset = Wishlist_Book.objects.all()
+    serializer_class = Wishlist_Serializer
+    permission_classes = [IsAuthenticated]
 
+    # def delete(self, request, *args, **kwargs):
+    #     user = request.data.get('user')
+    #     books = request.data.get('books')
+    #     if not user or not books:
+    #         data = {
+    #             "status" : True,
+    #             "msg" : "Wishlistdan delete qilish uchun user va books kiriting"
+    #         }
+    #         return Response(data=data)
+    #     wishlist = Wishlist_Book.objects.filter(user=user, books=books)
+    #     if not wishlist.exists():
+    #         data = {
+    #             "status" : True,
+    #             "msg" : "Ushbu user va books bazada mavjud emas!"
+    #         }
+    #         return Response(data=data)
+        
+    #     wishlist.delete()
+    #     data = {
+    #         "status" : True,
+    #         "msg" : "Wishlistdan ma'lumot successfully o'chirildi"
+    #     }
+    #     return Response(data=data)
 
+    def delete(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.delete()
 
+        data = {
+            "status" : True,
+            "msg" : "Muvaffaqiyatli o'chirlidi"
+        }
+        return Response(data=data)
 
 # --------------------------------------------------------Wishlist_Book--------------------------------------------
 
