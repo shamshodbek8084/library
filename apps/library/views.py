@@ -120,6 +120,22 @@ class Wishlist_Create(CreateAPIView):
         }
         return Response(data=data)
 
+class ListWishlist_View(ListAPIView):
+    queryset = Wishlist_Book.objects.all()
+    serializer_class = Wishlist_Serializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many = True)
+
+        data = {
+            "status" : True,
+            "msg" : "Wishlistdan ma'lumotlar olindi",
+            "wishlist" : serializer.data,
+        }
+        return Response(data=data)
+
 
 
 
