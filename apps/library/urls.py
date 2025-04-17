@@ -7,7 +7,8 @@ from .views import (CreateBook_View,
                     Change_Rating,
                     All_Rating,
                     Decrease_Rating,
-                    Search_Book_View,)
+                    Search_Book_View,
+                    Wishlist_Create,)
 
 
 urlpatterns = [
@@ -22,5 +23,6 @@ urlpatterns = [
     # path('create_image_book/', Image_Book.as_view(), name='create_image_book'),
     # path('list_image_book/', List_Image_Book.as_view(), name='list_image_book'),
     path('search_book/', Search_Book_View.as_view(), name='search_book'),
+    path('wishlist_create/', Wishlist_Create.as_view(), name='wishlist_create'),
 
 ]

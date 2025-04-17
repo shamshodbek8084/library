@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .serializer import Book_Serializer, Rating_Serializer, ImageBook_Serializer
+from .serializer import Book_Serializer, Rating_Serializer, ImageBook_Serializer, Wishlist_Serializer
 from .permissions import IsAdmin, IsUser
-from .models import Category, Book, Rating_Book, Image_Book
+from .models import Category, Book, Rating_Book, Image_Book, Wishlist_Book
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView, ListAPIView
@@ -84,3 +84,78 @@ class Search_Book_View(ListAPIView):
     search_fields = ['author', 'name']
 
 # --------------------------------------------------------Wishlist_Book--------------------------------------------
+
+class Wishlist_Create(CreateAPIView):
+    queryset = Wishlist_Book.objects.all()
+    serializer_class = Wishlist_Serializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        user = request.data.get('user')
+        books = request.data.get('books')
+
+        if not user or not books:
+            data = {
+                "status" : True,
+                "msg" : "User yoki Books ID si kiritilmagan"
+            }
+            return Response(data=data)
+
+        if Wishlist_Book.objects.filter(user=user, books=books).exists():
+            data = {
+                "status" : True,
+                "msg" : "Ushbu foydalanuvchi va kitob Wishlistda mavjud"
+            }
+            return Response(data=data)
+        
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception = True)
+        self.perform_create(serializer)
+
+        data = {
+            "status" : True,
+            "msg" : "Wishlistga muvaffqiyatli qo'shildi",
+            "user" : user,
+            "books" : books,
+        }
+        return Response(data=data)
+
+
+
+
+
+# --------------------------------------------------------Wishlist_Book--------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

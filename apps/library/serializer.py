@@ -18,7 +18,7 @@ class ImageBook_Serializer(ModelSerializer):
         model = Image_Book
         fields = '__all__'
 
-class Wishlist_Book(ModelSerializer):
+class Wishlist_Serializer(ModelSerializer):
     class Meta:
         model = Wishlist_Book
         fields = '__all__'
